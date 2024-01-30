@@ -3,11 +3,11 @@ import os
 
 def main():
     db_params = {
-        "dbname": "database_name",
-        "user": "database_username",
-        "password": "database_password",
-        "host": "database_host",
-        "port": "database_port"
+        "host": input("Enter database host:\n"),
+        "port": input("Enter database port:\n"),
+        "user": input("Enter username:\n"),
+        "password": input("Enter password:\n"),
+        "dbname": input("Enter database name:\n"),
     }
 
     # SQL query to retrieve function DDL
