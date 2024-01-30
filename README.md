@@ -17,19 +17,21 @@ This script is designed to extract the Data Definition Language (DDL) source cod
 
 2. Configure the script:
     
-    Open the script file (`extract_function_ddl.py`) and set the following PostgreSQL connection parameters:
+    When you run the script (`extract_function_ddl.py`), it will prompt you to enter the following PostgreSQL connection parameters:
 
-     ```python
-     db_params = {
-         "dbname": "database_name",
-         "user": "database_username",
-         "password": "database_password",
-         "host": "database_host",
-         "port": "database_port"
-     }
-     ```
+    ```python
+    db_params = {
+        "host": input("Enter database host:\n"),
+        "port": input("Enter database port:\n"),
+        "user": input("Enter username:\n"),
+        "password": input("Enter password:\n"),
+        "dbname": input("Enter database name:\n"),
+        }
+    ```
 
-    Replace `"database_name"`, `"database_username"`, `"database_password"`, `"database_host"`, and `"database_port"` with the actual PostgreSQL connection details.
+    Simply respond to the prompts by entering the appropriate values for your PostgreSQL connection.
+
+    **Note:** The script will use the provided values for establishing a connection to the PostgreSQL database.
 
 3. Run the script:
 
