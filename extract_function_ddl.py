@@ -1,5 +1,17 @@
 import psycopg2
 import os
+import codecs
+import re
+
+
+def clean_filename(filename):
+    # Invalid characters
+    invalid_chars = re.compile(r'[\/:*?"<>|]')
+
+    cleaned_filename = re.sub(invalid_chars, "", filename)
+
+    return cleaned_filename
+
 
 def main():
     db_params = {
@@ -37,17 +49,25 @@ def main():
         # Create and save .sql files in separate schema directories
         for function_row in function_data:
             schema_name, function_name, function_ddl = function_row
+
+            # Clean invalid characters
+            schema_name = clean_filename(schema_name)
+            function_name = clean_filename(function_name)
+
             schema_directory = os.path.join("function_ddl_files", schema_name)
+
             os.makedirs(schema_directory, exist_ok=True)
             if len(function_name) > 200:
-                filename = os.path.join(schema_directory, f"{function_name[:200] + '...'}.sql")
+                filename = os.path.join(
+                    schema_directory, f"{function_name[:200] + '...'}.sql"
+                )
             else:
                 filename = os.path.join(schema_directory, f"{function_name}.sql")
-            with open(filename, mode="w") as sql_file:
+            with codecs.open(filename, mode="w", encoding="utf-8") as sql_file:
                 sql_file.write(function_ddl)
 
         print("DDL source files extracted successfully.")
-        
+
     except Exception as e:
         print("An error occurred:", e)
 
